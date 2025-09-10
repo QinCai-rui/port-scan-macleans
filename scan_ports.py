@@ -3,8 +3,8 @@ import os
 from rich.progress import Progress, BarColumn, TaskProgressColumn, TimeElapsedColumn, TimeRemainingColumn
 
 HOST = "portquiz.net"
-PORTS = range(1, 65535) # Scan all TCP ports from 1 to 65535
-TIMEOUT = 0.4  # timeout for reliability
+PORTS = range(1, 65535) # Scan all TCP ports from 1 to 65535. change the range if you want
+TIMEOUT = 0.4  # timeout for reliability. increase if network unreliable
 RESULTS_FILE = "scan_results.txt"
 
 def scan_port(port):
@@ -23,7 +23,7 @@ def scan_port(port):
             err_code = getattr(e, "errno", None)
             msg = str(e)
             print(f"Port {port} OSError: {e} (errno={err_code})")
-            # Treat "timed out" in OSError as BLOCKED
+            # Treat "timed out" in OSError as BLOCKED (the school just does that)
             if err_code in [61, 111]:
                 return "REFUSED"
             elif err_code in [101, 113]:
